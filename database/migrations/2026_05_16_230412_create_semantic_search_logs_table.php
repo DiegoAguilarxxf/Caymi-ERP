@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs_actividad', function (Blueprint $table) {
+        Schema::create('semantic_search_logs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs_actividad');
+        Schema::dropIfExists('semantic_search_logs');
     }
 };

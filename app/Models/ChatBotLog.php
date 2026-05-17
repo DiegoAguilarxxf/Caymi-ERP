@@ -5,25 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Embedding extends Model
+class ChatbotLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'embeddings';
+    protected $table = 'chatbot_logs';
 
     public $timestamps = true;
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = null;
 
+
     public $incrementing = false;
-    protected $keyType = 'string';
+     protected $keyType = 'string';
 
     protected $fillable = [
-        'product_id',
-        'order_id',
-        'vector_reference',
-        'embedding_model',
+        'user_id',
+        'prompt',
+        'response',
+        'latency_ms',
         'created_at',
     ];
 
@@ -33,15 +34,8 @@ class Embedding extends Model
     |--------------------------------------------------------------------------
     */
 
-    // Producto al que pertenece el embedding
-    public function product()
+    public function user()
     {
-        return $this->belongsTo(Product::class);
-    }
-
-    // Pedido relacionado (opcional)
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(User::class);
     }
 }
