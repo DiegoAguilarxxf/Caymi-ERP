@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Fortify\Fortify;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,9 +23,25 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        $this->configureDefaults();
-    }
+{
+    $this->configureDefaults();
+
+    Fortify::redirects('register', function () {
+        return match(auth()->user()->role) {
+            'admin'  => '/admin/dashboard',
+            'client' => '/client/dashboard',
+            default  => '/',
+        };
+    });
+
+    Fortify::redirects('login', function () {
+        return match(auth()->user()->role) {
+            'admin'  => '/admin/dashboard',
+            'client' => '/client/dashboard',
+            default  => '/',
+        };
+    });
+}
 
     /**
      * Configure default behaviors for production-ready applications.

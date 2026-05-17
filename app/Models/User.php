@@ -8,10 +8,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-use App\Models\Order;
-use App\Models\OperationalLog;
-use App\Models\SemanticSearchLog;
-use App\Models\ChatbotLog;
 
 class User extends Authenticatable
 {

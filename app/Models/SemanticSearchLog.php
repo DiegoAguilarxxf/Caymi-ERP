@@ -23,7 +23,6 @@ class SemanticSearchLog extends Model
         'query_text',
         'results_count',
         'latency_ms',
-        'created_at',
     ];
 
     /*

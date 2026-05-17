@@ -25,7 +25,7 @@ class OperationalLog extends Model
         'status',
         'error_message',
         'latency_ms',
-        'created_at',
+    
     ];
 
     /*

@@ -24,7 +24,6 @@ class Embedding extends Model
         'order_id',
         'vector_reference',
         'embedding_model',
-        'created_at',
     ];
 
     /*

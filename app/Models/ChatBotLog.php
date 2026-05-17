@@ -25,7 +25,7 @@ class ChatbotLog extends Model
         'prompt',
         'response',
         'latency_ms',
-        'created_at',
+        
     ];
 
     /*

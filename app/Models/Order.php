@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'orders';
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
         'user_id',

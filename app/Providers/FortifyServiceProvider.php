@@ -25,11 +25,37 @@ class FortifyServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        $this->configureActions();
-        $this->configureViews();
-        $this->configureRateLimiting();
-    }
+{
+    $this->configureActions();
+    $this->configureViews();
+    $this->configureRateLimiting();
+
+    app()->singleton(
+        \Laravel\Fortify\Contracts\LoginResponse::class,
+        function () {
+            return new class implements \Laravel\Fortify\Contracts\LoginResponse {
+                public function toResponse($request) {
+                    return match(auth()->user()->role) {
+                        'admin'  => redirect()->route('admin.dashboard'),
+                        'client' => redirect()->route('client.dashboard'),
+                        default  => redirect('/'),
+                    };
+                }
+            };
+        }
+    );
+
+    app()->singleton(
+        \Laravel\Fortify\Contracts\RegisterResponse::class,
+        function () {
+            return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
+                public function toResponse($request) {
+                    return redirect()->route('client.dashboard');
+                }
+            };
+        }
+    );
+}
 
     /**
      * Configure Fortify actions.
