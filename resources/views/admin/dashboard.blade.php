@@ -4,15 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
                 Dashboard Admin
             </h2>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <button type="submit"
-                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition">
-                    Cerrar sesión
-                </button>
-            </form>
         </div>
     </x-slot>
 
