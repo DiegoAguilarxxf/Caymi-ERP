@@ -76,4 +76,14 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto eliminado correctamente.');
     }
+
+    // Vista pública del catálogo para clientes
+    public function catalog()
+    {
+        $products = Product::where('stock', '>', 0)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('products.catalog', compact('products'));
+    }
 }

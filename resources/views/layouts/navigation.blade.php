@@ -12,16 +12,26 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if(auth()->user()->role === 'admin')
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
-                            {{ __('Productos') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
+                        {{ __('Productos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.orders.index')" :active="request()->routeIs('admin.orders.*')">
+                        {{ __('Pedidos') }}
+                    </x-nav-link>
                     @else
-                        <x-nav-link :href="route('client.dashboard')" :active="request()->routeIs('client.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('client.dashboard')" :active="request()->routeIs('client.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('client.catalog')" :active="request()->routeIs('client.catalog')">
+                        {{ __('Catálogo') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('client.orders.index')" :active="request()->routeIs('client.orders.*')">
+                        {{ __('Mis Pedidos') }}
+                    </x-nav-link>
                     @endif
                 </div>
             </div>
