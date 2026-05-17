@@ -32,7 +32,6 @@
 
                         <div class="mt-3 flex justify-between items-center">
                             <span class="font-bold text-indigo-600">${{ number_format($product->price, 2) }}</span>
-                            <span class="text-xs text-gray-400">Stock: {{ $product->stock }}</span>
                         </div>
 
                         <form method="POST" action="{{ route('client.orders.store') }}" class="mt-4">
