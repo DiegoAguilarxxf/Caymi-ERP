@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
 {
+    // 🚀 Fuerza a Laravel a generar todas las rutas (CSS, JS, Links) con HTTPS en Render
+    if (config('app.env') === 'production') {
+        URL::forceScheme('https');
+    }
+
     $this->configureDefaults();
 
     Fortify::redirects('register', function () {
