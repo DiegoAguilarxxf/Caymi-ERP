@@ -5,6 +5,26 @@
         </h2>
     </x-slot>
 
+    <div class="mb-6">
+    <form method="GET" action="{{ route('client.catalog') }}">
+        <div class="flex gap-3">
+            <input type="text" name="q" value="{{ $query ?? '' }}"
+                   placeholder="Busca por descripción, color, categoría..."
+                   class="flex-1 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <button type="submit"
+                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                Buscar
+            </button>
+            @if($query ?? false)
+                <a href="{{ route('client.catalog') }}"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Limpiar
+                </a>
+            @endif
+        </div>
+    </form>
+</div>
+
     <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         @if(session('success'))
@@ -63,7 +83,9 @@
         </div>
 
         <div class="mt-6">
-            {{ $products->links() }}
+            @if(method_exists($products, 'links'))
+    {{ $products->links() }}
+@endif
         </div>
     </div>
 </x-app-layout>

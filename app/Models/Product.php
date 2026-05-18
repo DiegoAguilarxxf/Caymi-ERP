@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -23,19 +24,22 @@ class Product extends Model
         'image_url',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELACIONES
-    |--------------------------------------------------------------------------
-    */
+    protected static function boot()
+    {
+        parent::boot();
 
-    // Un producto puede estar en muchos pedidos
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    // Un producto puede tener muchos embeddings
     public function embeddings()
     {
         return $this->hasMany(Embedding::class);

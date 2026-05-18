@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Embedding extends Model
 {
     use HasFactory;
 
     protected $table = 'embeddings';
-
     public $timestamps = true;
-
     const CREATED_AT = 'created_at';
     const UPDATED_AT = null;
-
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -26,19 +24,22 @@ class Embedding extends Model
         'embedding_model',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELACIONES
-    |--------------------------------------------------------------------------
-    */
+    protected static function boot()
+    {
+        parent::boot();
 
-    // Producto al que pertenece el embedding
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    // Pedido relacionado (opcional)
     public function order()
     {
         return $this->belongsTo(Order::class);
