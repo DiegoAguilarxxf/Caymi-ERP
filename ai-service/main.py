@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from google import genai
 import os
+import uvicorn  # <-- Importamos uvicorn para controlar el arranque
 
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
@@ -62,9 +63,16 @@ def semantic_search(request: SearchRequest):
 @app.post("/chat")
 def chat(request: ChatRequest):
     response = client.models.generate_content(
-    model="models/gemini-2.5-flash",
-    contents=request.context + "\n\nUsuario: " + request.prompt,
+        model="models/gemini-2.5-flash",
+        contents=request.context + "\n\nUsuario: " + request.prompt,
     )
     return {
         "response": response.text
     }
+
+# 🚀 BLOQUE DE ARRANQUE OBLIGATORIO PARA RENDER
+if __name__ == "__main__":
+    # Lee el puerto dinámico asignado por Render. Si no existe, usa el 8000 por defecto.
+    port = int(os.environ.get("PORT", 8000))
+    # 'main:app' asume que tu archivo se llama main.py
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
