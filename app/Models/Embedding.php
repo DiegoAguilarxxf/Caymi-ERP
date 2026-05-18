@@ -22,12 +22,12 @@ class Embedding extends Model
         'order_id',
         'vector_reference',
         'embedding_model',
+        'embedding',
     ];
 
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($model) {
             if (empty($model->id)) {
                 $model->id = (string) Str::uuid();

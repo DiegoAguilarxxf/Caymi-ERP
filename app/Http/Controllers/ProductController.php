@@ -41,12 +41,14 @@ class ProductController extends Controller
         try {
             $text = "{$product->name}. {$product->description}. Categoría: {$product->category}. Colores: {$product->colors}";
             $result = $this->ai->generateEmbedding($text, $product->id);
+            
 
             Embedding::create([
-                'product_id'      => $product->id,
-                'vector_reference'=> json_encode($result['embedding'] ?? []),
-                'embedding_model' => $result['model'] ?? 'gemini-embedding-001',
-            ]);
+    'product_id'       => $product->id,
+    'vector_reference' => json_encode($result['embedding'] ?? []),
+    'embedding_model'  => $result['model'] ?? 'gemini-embedding-001',
+    'embedding'        => '[' . implode(',', $result['embedding'] ?? []) . ']',
+]);
         } catch (\Exception $e) {
             // No bloqueamos si falla la IA
             \Log::warning("Embedding no generado para producto {$product->id}: " . $e->getMessage());
@@ -89,13 +91,14 @@ class ProductController extends Controller
             $text = "{$product->name}. {$product->description}. Categoría: {$product->category}. Colores: {$product->colors}";
             $result = $this->ai->generateEmbedding($text, $product->id);
 
-            Embedding::updateOrCreate(
-                ['product_id' => $product->id],
-                [
-                    'vector_reference' => json_encode($result['embedding'] ?? []),
-                    'embedding_model'  => $result['model'] ?? 'gemini-embedding-001',
-                ]
-            );
+           Embedding::updateOrCreate(
+    ['product_id' => $product->id],
+    [
+        'vector_reference' => json_encode($result['embedding'] ?? []),
+        'embedding_model'  => $result['model'] ?? 'gemini-embedding-001',
+        'embedding'        => '[' . implode(',', $result['embedding'] ?? []) . ']',
+    ]
+);
         } catch (\Exception $e) {
             \Log::warning("Embedding no actualizado para producto {$product->id}: " . $e->getMessage());
         }

@@ -15,6 +15,10 @@ class SearchRequest(BaseModel):
     query: str
     candidates: list[dict]
 
+class ChatRequest(BaseModel):
+    prompt: str
+    context: str
+
 @app.get("/")
 def root():
     return {"status": "ok", "service": "Tejidos Caymi AI"}
@@ -54,3 +58,13 @@ def semantic_search(request: SearchRequest):
 
     results.sort(key=lambda x: x["similarity_score"], reverse=True)
     return {"results": results[:5]}
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    response = client.models.generate_content(
+    model="models/gemini-2.5-flash",
+    contents=request.context + "\n\nUsuario: " + request.prompt,
+    )
+    return {
+        "response": response.text
+    }

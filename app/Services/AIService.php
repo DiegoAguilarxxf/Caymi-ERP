@@ -32,4 +32,14 @@ class AIService
 
         return $response->json();
     }
+    
+    public function chat(string $prompt, string $context): string
+{
+    $response = Http::post("{$this->baseUrl}/chat", [
+        'prompt'  => $prompt,
+        'context' => $context,
+    ]);
+
+    return $response->json('response', 'No pude generar una respuesta.');
+}
 }

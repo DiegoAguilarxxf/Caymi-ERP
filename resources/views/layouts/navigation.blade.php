@@ -20,6 +20,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('admin.orders.index')" :active="request()->routeIs('admin.orders.*')">
                         {{ __('Pedidos') }}
+                        <x-nav-link :href="route('admin.chat')" :active="request()->routeIs('admin.chat*')">
+    {{ __('Asistente') }}
+</x-nav-link>
                     </x-nav-link>
                     @else
                     <x-nav-link :href="route('client.dashboard')" :active="request()->routeIs('client.dashboard')">
@@ -32,7 +35,11 @@
                     <x-nav-link :href="route('client.orders.index')" :active="request()->routeIs('client.orders.*')">
                         {{ __('Mis Pedidos') }}
                     </x-nav-link>
-                    @endif
+                    <x-nav-link :href="route('client.chat')" :active="request()->routeIs('client.chat*')">
+                    {{ __('Asistente') }}
+                    </x-nav-link>
+
+                         @endif
                 </div>
             </div>
 
