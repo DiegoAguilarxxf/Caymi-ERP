@@ -33,6 +33,12 @@
                 {{ $slot }}
             </main>
         </div>
-
+@auth
+    @if(auth()->user()->role === 'admin')
+        <x-chatbot role="admin" />
+    @else
+        <x-chatbot role="client" />
+    @endif
+@endauth
     </body>
 </html>
